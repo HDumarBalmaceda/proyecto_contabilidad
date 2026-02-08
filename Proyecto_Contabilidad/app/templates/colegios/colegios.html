@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Colegios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/colegios/estilos_colegios.css') }}">
+</head>
+
+<body class="bg-light"> <nav class="navbar navbar-expand-lg bg-body-secondary">
+    <div class="container-fluid">
+      <a class="navbar-brand text-primary fs-3" href="#">Gestión de Colegios</a>
+    </div>
+  </nav>
+  <div class="container mt-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+  <div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="text-primary mb-0 fs-3">Listado de Colegios</h2>
+
+      <div class="d-flex align-items-center">
+        <form class="d-flex me-3" role="search">
+          <input class="form-control me-2 search-input" type="search" placeholder="Buscar colegio..." aria-label="Buscar">
+          <button class="btn search-btn" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+
+        <button class="btn btn-info me-2">
+          <i class="bi bi-funnel"></i> Filtrar
+        </button>
+
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearColegioModal">
+          <i class="bi bi-plus-circle"></i> Crear Colegio
+        </button>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+  {% for colegio in colegios %}
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 position-relative card-hover">
+      
+      <div class="d-flex justify-content-center align-items-center bg-light rounded-top p-4" style="height: 160px;">
+        {% if colegio.logo_path %}
+          <img src="{{ url_for('static', filename='uploads/' + colegio.logo_path) }}" 
+               class="img-fluid rounded" 
+               style="max-height: 120px; object-fit: contain;">
+        {% else %}
+          <i class="bi bi-bank fs-1 opacity-25 text-muted"></i>
+        {% endif %}
+      </div>
+
+      <div class="card-body text-center">
+        <h5 class="card-title text-primary fw-bold mb-1">
+          <a href="{{ url_for('colegios.detalle_colegio', id=colegio.id) }}" class="text-decoration-none stretched-link">
+            {{ colegio.nombre }}
+          </a>
+        </h5>
+        
+        <p class="text-muted small mb-3"><i class="bi bi-geo-alt"></i> {{ colegio.municipio }}</p>
+        
+        <div class="bg-light p-2 rounded-3">
+          <p class="mb-0 small text-secondary">Rector(a):</p>
+          <p class="mb-0 fw-semibold text-dark">{{ colegio.rector_nombre }}</p>
+        </div>
+      </div>
+
+      <div class="card-footer bg-transparent border-0 pb-3 d-flex justify-content-center gap-2" style="z-index: 2; position: relative;">
+        <button class="btn btn-sm btn-outline-warning rounded-circle" title="Editar">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger rounded-circle" title="Eliminar">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+    {% include "colegios/_form_colegio.html" %}
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="{{ url_for('static', filename='js/colegios/form_colegios.js') }}"></script>
+</body>
+</html>
