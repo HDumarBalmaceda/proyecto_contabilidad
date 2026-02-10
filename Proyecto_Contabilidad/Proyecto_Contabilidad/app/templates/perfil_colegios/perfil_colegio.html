@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil | {{ colegio.nombre }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil_colegios/estilos_perfil.css') }}">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-perfil mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold fs-3" href="{{ url_for('colegios.mostrar_colegios') }}">
+                <i class="bi bi-arrow-left-circle me-2"></i> Gestión de Colegios
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center mb-3 mb-md-0">
+                        {% if colegio.logo_path %}
+                            <img src="{{ url_for('static', filename='uploads/' + colegio.logo_path) }}" 
+                                 alt="Logo {{ colegio.nombre }}" class="logo-perfil img-thumbnail shadow-sm">
+                        {% else %}
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 150px;">
+                                <i class="bi bi-bank fs-1 text-muted opacity-50"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <div class="header-perfil">
+                            <span class="badge bg-primary-soft text-primary border border-primary mb-2">Institución Educativa</span>
+                            <h1 class="display-5 fw-bold text-dark mb-0">{{ colegio.nombre }}</h1>
+                            <p class="text-muted"><i class="bi bi-geo-alt-fill text-danger"></i> {{ colegio.municipio }}, {{ colegio.direccion }}</p>
+                        </div>
+                        
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <span class="data-label">NIT</span>
+                                <span class="data-value">{{ colegio.nit }}</span>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <span class="data-label">Teléfono</span>
+                                <span class="data-value">{{ colegio.telefono }}</span>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <span class="data-label">Rector(a)</span>
+                                <span class="data-value">{{ colegio.rector_nombre }}</span>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <span class="data-label">Documento Rector</span>
+                                <span class="data-value">{{ colegio.rector_documento }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 mb-4 h-100">
+                    <div class="card-header bg-white py-3 border-0">
+                        <h5 class="mb-0 text-primary fw-bold">
+                            <i class="bi bi-file-earmark-word-fill me-2"></i>Generación de Documentos
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info border-0 bg-light">
+                            <i class="bi bi-info-circle-fill me-2 text-info"></i>
+                            Los datos del colegio se insertarán automáticamente en la plantilla.
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold small">Tipo de Documento</label>
+                                <select class="form-select form-select-lg" id="tipoDocumento">
+                                    <option selected disabled>Seleccione una opción...</option>
+                                    <option value="constancia">Constancia de Estudio</option>
+                                    <option value="cert_notas">Certificado de Notas</option>
+                                    <option value="acta_grado">Acta de Grado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button class="btn btn-primary btn-lg w-100" onclick="iniciarTramite()">
+                                    <i class="bi bi-magic me-2"></i>Configurar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 mb-4 h-100">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-0">
+                        <h5 class="mb-0 text-primary fw-bold">
+                            <i class="bi bi-truck me-2"></i>Proveedores
+                        </h5>
+                        <button class="btn btn-sm btn-success rounded-circle" title="Vincular Proveedor">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush" id="listaProveedores">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div>
+                                    <div class="fw-bold mb-0">Papelería El Faro</div>
+                                    <small class="text-muted">NIT: 900.123.456-1</small>
+                                </div>
+                                <button class="btn btn-link btn-sm text-decoration-none">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
