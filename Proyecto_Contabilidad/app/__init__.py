@@ -11,8 +11,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     
-
-    # cifra la informacion enviada 
+    # Cifra la información enviada 
     app.secret_key = 'mi_llave_secreta_super_segura_123'
 
     # Inicializar db y migrate con la app
@@ -23,12 +22,18 @@ def create_app():
         # Importar modelos para que SQLAlchemy cree las tablas
         from app.modelos import models 
         
-        # Importar y registrar el Blueprint AQUÍ ADENTRO
+        # 1. Registro del Blueprint de Colegios
         from app.controladores.colegios.form_colegios_controlador import colegios_bp
         app.register_blueprint(colegios_bp)
 
+        # 2. REGISTRO DEL BLUEPRINT DE PROVEEDORES (AQUÍ ESTÁ LA MAGIA)
+        from app.controladores.proveedores.proveedores_controlador import proveedores_bp
+        app.register_blueprint(proveedores_bp)
+
     @app.route("/")
     def index():
-        return "Servidor Flask funcionando correctamente ✅"
+        # Tip: Podrías hacer que la raíz te redirija directamente a colegios
+        from flask import redirect, url_for
+        return redirect(url_for('colegios.mostrar_colegios'))
 
     return app
