@@ -1,0 +1,68 @@
+
+
+
+<div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl"> <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="fas fa-file-contract"></i> Vista Previa del Documento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #525659; padding: 30px;">
+                
+                <div id="hojaPapel" style="
+                    background: white; 
+                    width: 210mm; 
+                    min-height: 297mm; 
+                    margin: auto; 
+                    padding: 25mm; 
+                    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+                    font-family: 'Times New Roman', Times, serif;
+                    color: black;
+                    line-height: 1.5;">
+                    
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                        <img id="vp_logo" src="" alt="Logo" style="height: 80px; width: auto;">
+                        <div style="text-align: right;">
+                            <h3 id="vp_colegio_nombre" style="margin: 0; font-size: 18px;"></h3>
+                            <p style="margin: 0;">NIT: <span id="vp_colegio_nit"></span></p>
+                        </div>
+                    </div>
+
+                    <hr style="border-top: 2px solid #000;">
+
+                    <div style="margin-top: 30px;">
+                        <h4 style="text-align: center; text-decoration: underline;">ESTUDIO PREVIO Y SOLICITUD DE CONTRATACIÓN</h4>
+                        
+                        <p><strong>VIGENCIA:</strong> <span id="vp_vigencia"></span></p>
+                        <p><strong>OBJETO:</strong> <span id="vp_objeto"></span></p>
+                        <p><strong>CONTRATISTA:</strong> <span id="vp_proveedor"></span></p>
+                        
+                        <div id="vp_tabla_items" style="margin-top: 20px;">
+                            </div>
+
+                        <p style="margin-top: 20px; text-align: justify;">
+                            Se certifica que la presente solicitud cuenta con el respaldo presupuestal necesario bajo el CDP No. <span id="vp_cdp"></span>.
+                        </p>
+                    </div>
+
+                    <div style="margin-top: 80px; display: flex; justify-content: space-between;">
+                        <div style="text-align: center;">
+                            <img id="vp_firma" src="" alt="Firma" style="height: 60px; display: block; margin: auto;">
+                            <p style="border-top: 1px solid black; min-width: 200px;">
+                                <strong><span id="vp_rector_nombre"></span></strong><br>
+                                Rector(a) / Ordenador del Gasto
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar al Editor</button>
+                <button type="button" class="btn btn-success" onclick="procesarExpediente()">
+    Confirmar y Guardar
+</button>
+            </div>
+        </div>
+    </div>
+</div>
